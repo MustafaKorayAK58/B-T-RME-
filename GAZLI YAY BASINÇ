@@ -1,0 +1,255 @@
+[18:39, 08.06.2022] Canberk İKÜ: #include <DHT.h>      
+#include <SPI.h> 
+#include <Ethernet.h>
+#include <Wire.h>
+
+
+byte sensorVal0 = A0;
+byte sensorVal1 = A1; 
+byte sensorVal2 = A2;
+byte sensorVal3 = A3;
+byte sensorVal4 = A4;
+byte sensorVal5 = A5;
+byte sensorVal6 = A6;
+byte sensorVal7 = A7;
+byte sensorVal8 = A8;
+byte sensorVal9 = A9;
+byte sensorVal10 = A10;
+byte sensorVal11 = A11;
+byte sensorVal12 = A12;
+byte sensorVal13 = A13;
+byte sensorVal14 = A14;
+byte sensorVal15 = A15;
+
+int esikDeger = -130;
+
+#ifdef SPARK
+    #include "ThingSpeak/ThingSpeak.h"   
+  #else
+    #include "ThingSpeak.h"
+  #endif
+
+
+
+#define WRITE_DELAY_FOR_THINGSPEAK 15000
+#define DHTPIN 5  
+#define DHTTYPE DHT11 
+DHT dht(DHTPIN, DHTTYPE);
+#define roleX 8
+#define roleY 9
+  
+  
+  byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE,0xED};
+  IPAddress ip(192,168,1,150);                                //IP SONU DEGİSTİR
+  EthernetClient client;
+  
+  unsigned long mySensorsChannelNumber = 1149389;             //VİRA THİNGSPEAK
+  const char * myWriteAPIKey_sensors = "DFC5O6N4QW8RFIM2";
+
+                                                              //... THİNGSPEAK
+
+long lastWriteTime=0;    
+long lastReadTime=0;
+float responseValue=0;
+
+
+void setup()  // Start of setup
+{
+
+  Serial.begin(9600);
+  Ethernet.begin(mac, ip);
+  ThingSpeak.begin(client);
+  dht.begin();
+  pinMode(roleX,OUTPUT);
+  pinMode(roleY,OUTPUT);
+  pinMode(sensorVal0, INPUT);  
+  pinMode(sensorVal1, INPUT);  
+  pinMode(sensorVal2, INPUT);
+  pinMode(sensorVal3, INPUT);
+  pinMode(sensorVal4, INPUT);
+  pinMode(sensorVal5, INPUT);
+  pinMode(sensorVal6, INPUT);
+  pinMode(sensorVal7, INPUT);
+  pinMode(sensorVal8, INPUT);
+  pinMode(sensorVal9, INPUT);
+  pinMode(sensorVal10, INPUT);
+  pinMode(sensorVal11, INPUT);
+  pinMode(sensorVal12, INPUT);
+  pinMode(sensorVal13, INPUT);
+  pinMode(sensorVal14, INPUT);
+  pinMode(sensorVal15, INPUT);
+
+  
+}  
+
+     
+void loop()  
+{
+     
+     
+     int sensorVal0deger = analogRead(sensorVal0);           
+     float pressure_bar0 = 5.0*(sensorVal0deger)/600.0;
+     
+     Serial.print("X1.txt=");  
+     Serial.print("\""); 
+     Serial.print(pressure_bar0);  
+     Serial.print("\"");  
+     Serial.write(0xff);  
+     Serial.write(0xff);
+     Serial.write(0xff);
+  
+ 
+     if (pressure_bar0 > 130)
+     {
+     Serial.print("X1.bco=2016");
+     Serial.write(0xff);  
+     Serial.write(0xff);
+     Serial.write(0xff);
+     }
+  
+     if (pressure_bar0 < 130)
+     {
+     Serial.print("X1.bco=63488");
+     Serial.write(0xff);  
+     Serial.write(0xff);
+     Serial.write(0xff);
+     }
+    
+     
+
+
+     
+     int sensorVal1deger = analogRead(sensorVal1);           
+     float pressure_bar1 = 5.0*(sensorVal1deger)/600.0;
+     
+    
+     Serial.print("C2.txt=");  
+     Serial.print("\""); 
+     Serial.print(pressure_bar1);  
+     Serial.print("\"");  
+     Serial.write(0xff);  
+     Serial.write(0xff);
+     Serial.write(0xff);
+
+
+     if (pressure_bar1 > 130)
+     {
+     Serial.print("C2.bco=2016");
+     Serial.write(0xff);  
+     Serial.write(0xff);
+     Serial.write(0xff);
+     }
+     
+     if (pressure_bar1 < 130)
+     {
+     Serial.print("C2.bco=63488");
+     Serial.write(0xff);  
+     Serial.write(0xff);
+     Serial.write(0xff);
+     }
+    
+
+
+     int sensorVal2deger = analogRead(sensorVal2);           
+     float pressure_bar2 = 5.0*(sensorVal2deger)/600.0;
+    
+     Serial.print("C3.txt=");  
+     Serial.print("\""); 
+     Serial.print(pressure_bar2);  
+     Serial.print("\"");  
+     Serial.write(0xff);  
+     Serial.write(0xff);
+     Serial.write(0xff);
+    
+   
+     if (pressure_bar2 > 130)
+     {
+     Serial.print("C3.bco=2016");
+     Serial.write(0xff);  
+     Serial.write(0xff);
+     Serial.write(0xff);
+     }
+ 
+     if (pressure_bar2 < 130)
+     {
+     Serial.print("C3.bco=63488");
+     Serial.write(0xff);  
+     Serial.write(0xff);
+     Serial.write(0xff);
+     }
+
+    
+     int sensorVal3deger = analogRead(sensorVal3);           
+     float pressure_bar3 = 5.0*(sensorVal3deger)/600.0;
+    
+     Serial.print("C4.txt=");  
+     Serial.print("\""); 
+     Serial.print(pressure_bar3);  
+     Serial.print("\"");  
+     Serial.write(0xff);  
+     Serial.write(0xff);
+     Serial.write(0xff);
+
+    
+     if (pressure_bar3 > 130)
+     {
+     Serial.print("C4.bco=2016");
+     Serial.write(0xff);  
+     Serial.write(0xff);
+     Serial.write(0xff);
+     }
+    
+     if (pressure_bar3 < 130)
+     {
+     Serial.print("C4.bco=63488");
+     Serial.write(0xff);  
+     Serial.write(0xff);
+     Serial.write(0xff);
+     }
+[18:39, 08.06.2022] Canberk İKÜ: float T = dht.readTemperature();    //SICAKLIK VE NEM
+     Serial.print("V2.txt=");  
+     Serial.print("\""); 
+     Serial.print(T);  
+     Serial.print("\""); 
+     Serial.write(0xff);  
+     Serial.write(0xff);
+     Serial.write(0xff);
+
+
+     float H = dht.readHumidity();
+     Serial.print("V3.txt=");  
+     Serial.print("\"");  
+     Serial.print(H);  
+     Serial.print("\"");  
+     Serial.write(0xff);  
+     Serial.write(0xff);
+     Serial.write(0xff);
+
+
+
+     if (millis()-lastWriteTime>20000) {          
+      Serial.println("Read sensors' values...");
+      
+      if (isnan(T) || isnan(H)) {
+      Serial.println("Failed to read from DHT");
+  
+          
+      }
+      else {
+          Serial.println("Temp="+String(T)+" *C");
+          Serial.println("Humidity="+String(H)+" %");
+
+          
+          ThingSpeak.setField(1,pressure_bar0);   
+          ThingSpeak.setField(2,pressure_bar1);
+          ThingSpeak.setField(3,pressure_bar2);
+          ThingSpeak.setField(4,pressure_bar3);         
+          ThingSpeak.setField(5,pressure_bar4);
+          ThingSpeak.setField(6,pressure_bar5);  
+          
+          
+
+
+
+    ThingSpeak.writeFields(mySensorsChannelNumber, myWriteAPIKey_sensors);                 
+    lastWriteTime=millis();
